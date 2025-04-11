@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sugar Regulatory Administration - Set New Password</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+        
+        body {
+            background-image: url('bglogin.png');
+            background-size: cover;
+            background-position: center -80px;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .logo {
+            margin-top: 40px;
+            margin-bottom: 20px;
+        }
+        
+        .logo img {
+            width: 120px;
+            height: auto;
+        }
+        
+        .content-area {
+            width: 100%;
+            max-width: 500px;
+            padding: 0 20px;
+            z-index: 1;
+        }
+        
+        h1 {
+            font-size: 39px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #000000;
+            text-align: center;
+        }
+        
+        .instruction {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #333;
+        }
+        
+        .password-input-container {
+            position: relative;
+        }
+        
+        .password-input {
+            width: 100%;
+            padding: 12px 40px 12px 15px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 16px;
+            outline: none;
+            background-color: white;
+        }
+        
+        .password-input:focus {
+            border-color: #008000;
+        }
+        
+        .toggle-password {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #999;
+            cursor: pointer;
+        }
+        
+        .update-btn {
+            background-color: #008000;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 15px;
+            width: 100%;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-top: 10px;
+        }
+        
+        .update-btn:hover {
+            background-color: #006400;
+        }
+        
+        .back-button {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            color: #333;
+            font-size: 20px;
+            z-index: 10;
+        }
+        
+        /* Modal Styles */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+        
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .modal {
+            background-color: white;
+            border-radius: 12px;
+            padding: 30px;
+            width: 90%;
+            max-width: 400px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            transform: translateY(-20px);
+            transition: transform 0.3s ease;
+        }
+        
+        .modal-overlay.active .modal {
+            transform: translateY(0);
+        }
+        
+        .success-icon {
+            width: 70px;
+            height: 70px;
+            background-color: #f0f9f0;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 auto 20px;
+        }
+        
+        .success-icon i {
+            color: #008000;
+            font-size: 32px;
+        }
+        
+        .modal-title {
+            font-size: 22px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        
+        .modal-message {
+            color: #666;
+            margin-bottom: 25px;
+            font-size: 14px;
+        }
+        
+        .login-btn {
+            background-color: #008000;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 12px 25px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .login-btn:hover {
+            background-color: #006400;
+        }
+    </style>
+</head>
+<body>
+    <a href="forgotpass.html" class="back-button">
+        <i class="fas fa-chevron-left"></i>
+    </a>
+    
+    <div class="logo">
+        <img src="SRA_thumbnail.png" alt="Department of Agriculture Logo">
+    </div>
+    
+    <div class="content-area">
+        <h1>Set new password</h1>
+        <p class="instruction">Create a new password. Ensure it differs from previous ones for security</p>
+        
+        <form id="resetPasswordForm">
+            <div class="form-group">
+                <label for="newPassword">Password</label>
+                <div class="password-input-container">
+                    <input type="password" id="newPassword" class="password-input" placeholder="Enter your new password">
+                    <i class="toggle-password fas fa-eye-slash" onclick="togglePasswordVisibility('newPassword')"></i>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="confirmPassword">Confirm Password</label>
+                <div class="password-input-container">
+                    <input type="password" id="confirmPassword" class="password-input" placeholder="Re-enter password">
+                    <i class="toggle-password fas fa-eye-slash" onclick="togglePasswordVisibility('confirmPassword')"></i>
+                </div>
+            </div>
+            
+            <button type="button" class="update-btn" onclick="updatePassword()">Update Password</button>
+        </form>
+    </div>
+    
+    <!-- Success Modal -->
+    <div class="modal-overlay" id="successModal">
+        <div class="modal">
+            <div class="success-icon">
+                <i class="fas fa-check"></i>
+            </div>
+            <h2 class="modal-title">Password Updated!</h2>
+            <p class="modal-message">Your password has been successfully updated. You can now login with your new password.</p>
+            <button class="login-btn" onclick="redirectToLogin()">Back to Login</button>
+        </div>
+    </div>
+    
+    <script>
+        function togglePasswordVisibility(inputId) {
+            const passwordInput = document.getElementById(inputId);
+            const icon = passwordInput.nextElementSibling;
+            
+            if (passwordInput.type === "password") {
+                passwordInput.type = "text";
+                icon.classList.replace("fa-eye-slash", "fa-eye");
+            } else {
+                passwordInput.type = "password";
+                icon.classList.replace("fa-eye", "fa-eye-slash");
+            }
+        }
+        
+        function showSuccessModal() {
+            const modal = document.getElementById('successModal');
+            modal.classList.add('active');
+        }
+        
+        function redirectToLogin() {
+            window.location.href = 'login.html';
+        }
+        
+        function updatePassword() {
+            const newPassword = document.getElementById('newPassword').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+
+            const passwordRequirements = /^(?=.*[A-Z])(?=.*[!@#$%^&*(),.?":{}|<>])[A-Za-z\d!@#$%^&*(),.?":{}|<>]{8,}$/;
+
+        if (!newPassword || !confirmPassword) {
+            alert('Please fill in all fields');
+            return;
+        }
+
+        if (newPassword !== confirmPassword) {
+            alert('Passwords do not match');
+            return;
+        }
+
+        if (!passwordRequirements.test(newPassword)) {
+            alert('Password must be at least 8 characters long, contain at least 1 uppercase letter, and 1 special character.');
+            return;
+        }
+            
+            // Here you would typically send the new password to your backend
+            // For example:
+            // const response = await fetch('/api/reset-password', {
+            //     method: 'POST',
+            //     headers: { 'Content-Type': 'application/json' },
+            //     body: JSON.stringify({ newPassword })
+            // });
+            
+            // If the password update was successful, show the success modal
+            showSuccessModal();
+        }
+    </script>
+</body>
+</html>
