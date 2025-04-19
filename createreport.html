@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -358,8 +359,20 @@
                         <option value="12">December</option>
                     </select>
                 </div>
+                
                 <div class="period-select">
-                    <input type="number" id="reportYear" min="1900" max="2100" placeholder="Enter Year" value="2025">
+                    <select id="reportYear">
+                        <option value="2020-2021">2020-2021</option>
+                        <option value="2021-2022">2021-2022</option>
+                        <option value="2022-2023">2022-2023</option>
+                        <option value="2023-2024">2023-2024</option>
+                        <option value="2024-2025" selected>2024-2025</option>
+                        <option value="2025-2026">2025-2026</option>
+                        <option value="2026-2027">2026-2027</option>
+                        <option value="2027-2028">2027-2028</option>
+                        <option value="2028-2029">2028-2029</option>
+                        <option value="2029-2030">2029-2030</option>
+                    </select>
                 </div>
             </div>
         </div>
@@ -389,7 +402,7 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td class="month-display" id="selectedMonth">April 2025</td>
+                        <td class="month-display" id="selectedMonth">April 2024-2025</td>
                         <td><input type="text"></td>
                         <td><input type="text"></td>
                         <td><input type="text"></td>
@@ -451,21 +464,21 @@
     <script>
         // Simple script to update the displayed month when selections change
         document.getElementById('reportMonth').addEventListener('change', updateDisplayedMonth);
-        document.getElementById('reportYear').addEventListener('input', updateDisplayedMonth);
+        document.getElementById('reportYear').addEventListener('change', updateDisplayedMonth);
 
         function updateDisplayedMonth() {
             const monthSelect = document.getElementById('reportMonth');
-            const yearInput = document.getElementById('reportYear');
+            const yearSelect = document.getElementById('reportYear');
             const monthDisplay = document.getElementById('selectedMonth');
             
-            if(monthSelect.value && yearInput.value) {
+            if(monthSelect.value && yearSelect.value) {
                 const monthNames = [
                     "January", "February", "March", "April", "May", "June",
                     "July", "August", "September", "October", "November", "December"
                 ];
                 
                 const selectedMonth = monthNames[parseInt(monthSelect.value) - 1];
-                monthDisplay.textContent = `${selectedMonth} ${yearInput.value}`;
+                monthDisplay.textContent = `${selectedMonth} ${yearSelect.value}`;
             } else {
                 monthDisplay.textContent = "Select Month and Year";
             }
