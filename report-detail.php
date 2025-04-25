@@ -419,6 +419,30 @@ if (!isset($_SESSION['userID']) || !isset($_SESSION['is_admin']) || $_SESSION['i
         .table-subheader {
             background-color: #f1f5f9 !important;
         }
+        
+        /* Remarks section styles */
+        .remarks-section {
+            margin-top: 15px;
+        }
+        
+        .remarks-label {
+            font-size: 12px;
+            color: #000000;
+            margin-bottom: 4px;
+            font-weight: 500;
+        }
+        
+        .remarks-textarea {
+            width: 100%;
+            min-height: 80px;
+            padding: 8px;
+            border: 1px solid #e2e8f0;
+            border-radius: 4px;
+            background-color: #f8fafc;
+            color: #334155;
+            font-size: 13px;
+            resize: vertical;
+        }
     </style>
 </head>
 <body>
@@ -618,6 +642,16 @@ if (!isset($_SESSION['userID']) || !isset($_SESSION['is_admin']) || $_SESSION['i
                                     </tr>
                                 </tbody>
                             </table>
+                        </div>
+                    </div>
+                    
+                    <!-- New Remarks Section -->
+                    <div class="form-section">
+                      
+                        <div class="remarks-section">
+                            <div class="remarks-label">Remarks</div>
+                            <textarea class="remarks-textarea" readonly></textarea>
+
                         </div>
                     </div>
                 </form>
